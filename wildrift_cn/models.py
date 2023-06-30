@@ -1,11 +1,14 @@
+import ast
 import json
+
 from django.db import models
 
 
-class Hero(models.Model):
+class Champion(models.Model):
+    # Keys below are dropped from API
+    # intro, lane, tags, searchkey
     heroId = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
-    title = models.CharField(max_length=100)
     roles = models.CharField(max_length=200)
     avatar = models.URLField()
     card = models.URLField()
@@ -25,13 +28,13 @@ class Hero(models.Model):
         self.roles = json.dumps(x)
 
     def get_roles(self):
-        return json.loads(self.roles)
+        return ast.literal_eval(self.roles)
 
 
-class HeroStatistic(models.Model):
+class ChampionStatistic(models.Model):
     id = models.IntegerField(primary_key=True)
     position = models.IntegerField()
-    hero_id = models.ForeignKey(Hero, on_delete=models.CASCADE)
+    hero_id = models.ForeignKey(Champion, on_delete=models.CASCADE)
     strength = models.IntegerField()
     weight = models.IntegerField()
     appear_rate = models.FloatField()
@@ -45,4 +48,3 @@ class HeroStatistic(models.Model):
 
     def __str__(self):
         return self.id
-
