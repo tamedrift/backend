@@ -34,7 +34,7 @@ class Champion(models.Model):
 class ChampionStatistic(models.Model):
     id = models.IntegerField(primary_key=True)
     position = models.IntegerField()
-    hero_id = models.ForeignKey(Champion, on_delete=models.CASCADE)
+    hero_id = models.IntegerField()
     strength = models.IntegerField()
     weight = models.IntegerField()
     appear_rate = models.FloatField()
@@ -45,6 +45,8 @@ class ChampionStatistic(models.Model):
     win_bzc = models.IntegerField()
     dtstatdate = models.DateField()
     strength_level = models.IntegerField()
+    league = models.CharField(max_length=20)
+    lane = models.CharField(max_length=20)
 
     def __str__(self):
         return self.id

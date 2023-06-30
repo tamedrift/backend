@@ -4,12 +4,6 @@ from wildrift_cn.catalog import catalog
 from wildrift_cn.models import Champion
 
 
-def get_champions() -> dict[str, str]:
-    url = "https://game.gtimg.cn/images/lgamem/act/lrlib/js/heroList/hero_list.js"
-    champs = requests.get(url)
-    return champs.json()
-
-
 def process_champions(champions: dict) -> list[Champion]:
     keys_to_drop = {"intro", "lane", "tags", "searchkey", "alias", "title"}
     models = []
@@ -34,13 +28,17 @@ def process_champions(champions: dict) -> list[Champion]:
 
 
 def name_from_poster_url(url: str) -> str:
-    start_index = url.rfind("/") + 1  # Find the index of the last "/"
-    end_index = url.rfind("_")  # Find the index of the last "_"
+    start_index = url.rfind("/") + 1
+    end_index = url.rfind("_")
     champion_name = url[start_index:end_index]
     return champion_name
 
 
 def run():
-    champs = get_champions()
+    url = "https://game.gtimg.cn/images/lgamem/act/lrlib/js/heroList/hero_list.js"
+    res = requests.get(url)
+    champs = res.json()
+
     models = process_champions(champs)
+
     Champion.objects.bulk_create(models)

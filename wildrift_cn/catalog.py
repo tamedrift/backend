@@ -36,7 +36,7 @@ class Catalog:
         "嘉文四世": "Jarvan IV",
         "图奇": "Twitch",
         "墨菲特": "Malphite",
-        "奥恩": "Orianna",
+        "奥恩": "Orrn",
         "奥拉夫": "Olaf",
         "奥瑞利安·索尔": "Aurelion Sol",
         "奥莉安娜": "Orianna",
@@ -113,6 +113,16 @@ class Catalog:
         "韦鲁斯": "Varus",
         "黛安娜": "Diana",
     }
+
+    leagues = {
+        "0": "Diamond-",
+        "1": "Diamond+",
+        "2": "Master+",
+        "3": "Grandmaster+",
+        "4": "Challenger",
+    }
+
+    lanes = {"1": "Mid", "2": "Solo", "3": "Duo", "4": "Support", "5": "Jungle"}
 
 
 catalog = Catalog()
