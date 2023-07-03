@@ -1,5 +1,5 @@
 """
-WSGI config for tamerift project.
+WSGI config for tamedrift project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tamerift.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tamedrift.settings')
 
 application = get_wsgi_application()
