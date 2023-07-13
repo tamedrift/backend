@@ -10,6 +10,9 @@ urlpatterns = [
         name="champion_statistics",
     ),
     path("champions", views.ChampionsList.as_view(), name="champions"),
+    path(
+        "champions/<int:pk>/", views.ChampionsDetail.as_view(), name="champions_detail"
+    ),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

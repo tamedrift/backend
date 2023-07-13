@@ -45,8 +45,11 @@ class ChampionStatistic(models.Model):
     win_bzc = models.IntegerField()
     dtstatdate = models.DateField()
     strength_level = models.IntegerField()
-    league = models.CharField(max_length=20)
-    lane = models.CharField(max_length=20)
+    league = models.IntegerField()
+    lane = models.IntegerField()
 
     def __str__(self):
         return self.id
+
+    class Meta:
+        ordering = ["appear_bzc"]

@@ -1,6 +1,5 @@
 import requests
 
-from wildrift_cn.catalog import catalog
 from wildrift_cn.models import ChampionStatistic
 
 
@@ -9,8 +8,8 @@ def process_stats(stats: dict) -> list[ChampionStatistic]:
     for league, lanes in stats["data"].items():
         for lane, champions in lanes.items():
             for champion in champions:
-                champion["league"] = catalog.leagues[league]
-                champion["lane"] = catalog.lanes[lane]
+                champion["league"] = league
+                champion["lane"] = lane
                 model = ChampionStatistic(**champion)
                 models.append(model)
     return models

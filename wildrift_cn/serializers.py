@@ -6,7 +6,7 @@ from wildrift_cn.models import Champion, ChampionStatistic
 class ChampionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Champion
-        fields = ["heroId", "name", "roles"]
+        fields = ["heroId", "name", "roles", "avatar"]
 
 
 class ChampionStatisticSerializer(serializers.ModelSerializer):
