@@ -1,9 +1,14 @@
-from django.http import HttpResponse
-from django.core import serializers
-from wildrift_cn.models import ChampionStatistic
+from rest_framework import generics
+
+from wildrift_cn.models import Champion, ChampionStatistic
+from wildrift_cn.serializers import ChampionSerializer, ChampionStatisticSerializer
 
 
-def statistics(request):
-    stats = ChampionStatistic.objects.all()
-    sstats = serializers.serialize('json', stats)
-    return HttpResponse(sstats, content_type="application/json")
+class ChampionStatisticsList(generics.ListCreateAPIView):
+    queryset = ChampionStatistic.objects.all()
+    serializer_class = ChampionStatisticSerializer
+
+
+class ChampionsList(generics.ListCreateAPIView):
+    queryset = Champion.objects.all()
+    serializer_class = ChampionSerializer
