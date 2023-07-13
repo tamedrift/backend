@@ -11,7 +11,7 @@ urlpatterns = [
     ),
     path("champions", views.ChampionsList.as_view(), name="champions"),
     path(
-        "champions/<int:pk>/", views.ChampionsDetail.as_view(), name="champions_detail"
+        "champions/<int:pk>", views.ChampionsDetail.as_view(), name="champions_detail"
     ),
 ]
 
