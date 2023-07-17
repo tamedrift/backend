@@ -8,6 +8,7 @@ class ChampionStatisticsList(generics.ListAPIView):
     queryset = ChampionStatistic.objects.all()
     serializer_class = ChampionStatisticSerializer
     filterset_fields = ["league", "lane"]
+    pagination_class = None
 
 
 class ChampionsList(generics.ListAPIView):
