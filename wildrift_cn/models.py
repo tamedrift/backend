@@ -48,6 +48,9 @@ class ChampionStatistic(models.Model):
     league = models.IntegerField()
     lane = models.IntegerField()
     tier = models.IntegerField()
+    win_pct = models.IntegerField()
+    appear_pct = models.IntegerField()
+    forbid_pct = models.IntegerField()
 
     def __str__(self):
         return self.id

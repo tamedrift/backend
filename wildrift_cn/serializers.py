@@ -20,5 +20,8 @@ class ChampionStatisticSerializer(serializers.ModelSerializer):
             "forbid_bzc",
             "win_rate",
             "win_bzc",
-            "tier"
+            "tier",
+            "win_pct",
+            "appear_pct",
+            "forbid_pct",
         ]

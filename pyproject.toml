@@ -1,2 +1,34 @@
 [tool.isort]
 profile = "black"
+[tool.poetry]
+name = "backend"
+version = "0.1.0"
+description = ""
+authors = ["Martin Matousek <martin.matousek@outlook.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.2.3"
+djangorestframework = "^3.14.0"
+django-filter = "^23.2"
+django-extensions = "^3.2.3"
+django-cors-headers = "^4.2.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.7.0"
+isort = "^5.12.0"
+ruff = "^0.0.278"
+mypy = "^1.4.1"
+jupyterlab = "^4.0.3"
+
+
+[tool.poetry.group.scripts.dependencies]
+pandas = "^2.0.3"
+requests = "^2.31.0"
+pandera = "^0.16.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -162,3 +162,4 @@ cython_debug/
 # Stuff
 .ruff_cache
 .DS_Store
+notebooks/
