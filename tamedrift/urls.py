@@ -1,9 +1,7 @@
 from django.contrib import admin
-from django.urls import path
-
-from .api import api
+from django.urls import include, path
 
 urlpatterns = [
-    path("api/", api.urls),
+    path("wildrift_cn/", include("wildrift_cn.urls")),
     path("admin/", admin.site.urls),
 ]
