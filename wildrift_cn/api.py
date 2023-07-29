@@ -1,3 +1,4 @@
+from django.db.models import Max
 from ninja import Query, Router
 
 from wildrift_cn.models import Champion, ChampionStatistic
@@ -20,3 +21,11 @@ def champion(request, champion_id: int):
 @router.get("/champions", response=list[ChampionOut])
 def champions(request):
     return Champion.objects.all()
+
+
+@router.get("/last_date")
+def last_date(request):
+    last_date = ChampionStatistic.objects.all().aggregate(Max("dtstatdate"))[
+        "dtstatdate__max"
+    ]
+    return {"last_date": last_date}
