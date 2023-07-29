@@ -115,7 +115,7 @@ class Catalog:
     }
 
     leagues = {
-        "0": "Diamond-",
+        "0": "Platinum+",
         "1": "Diamond+",
         "2": "Master+",
         "3": "Grandmaster+",
