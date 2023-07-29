@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Champion, ChampionStatistic
+from .models import Champion, TierList
 
 admin.site.register(Champion)
-admin.site.register(ChampionStatistic)
+admin.site.register(TierList)

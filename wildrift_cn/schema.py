@@ -3,7 +3,7 @@ from typing import Optional
 
 from ninja import FilterSchema, ModelSchema
 
-from wildrift_cn.models import Champion, ChampionStatistic
+from wildrift_cn.models import Champion, TierList
 
 
 class TierListFilterSchema(FilterSchema):
@@ -14,7 +14,7 @@ class TierListFilterSchema(FilterSchema):
 
 class TierListOut(ModelSchema):
     class Config:
-        model = ChampionStatistic
+        model = TierList
         model_fields = [
             "hero_id",
             "appear_rate",

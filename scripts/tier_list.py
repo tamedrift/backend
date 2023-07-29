@@ -2,7 +2,7 @@ import pandas as pd
 import requests
 from pandera import Check, Column, DataFrameSchema
 
-from wildrift_cn.models import ChampionStatistic
+from wildrift_cn.models import TierList
 
 SCHEMA = DataFrameSchema(
     {
@@ -40,24 +40,31 @@ def create_dataframe_with_features(
         .assign(tier=5 - pd.cut(df.win_rate, 5, labels=False))
         # Create percentiles for bar length in Vue
         .assign(win_pct=pd.cut(df.win_rate, 10, labels=False) + 1)
-        .assign(appear_pct=pd.cut(df.appear_rate, 10, labels=False) + 1)
-        .assign(forbid_pct=pd.cut(df.forbid_rate, 10, labels=False) + 1)
+        .assign(appear_pct=pd.cut(df.appear_rate, 5, labels=False) + 1)
+        .assign(forbid_pct=pd.cut(df.forbid_rate, 5, labels=False) + 1)
     )
     return df
 
 
-def dataframe_to_champion_statistic(dataframe: pd.DataFrame) -> list[ChampionStatistic]:
+def dataframe_to_tier_list(dataframe: pd.DataFrame) -> list[TierList]:
     rows = dataframe.to_dict(orient="records")
-    return [ChampionStatistic(**row) for row in rows]
+    return [TierList(**row) for row in rows]
 
 
 def run():
+    # Scrape chinese data
     url = "https://mlol.qt.qq.com/go/lgame_battle_info/hero_rank_list_v2"
     res = requests.get(url)
     stats = res.json()
 
+    # Check dates
+    res = requests.get("http://localhost:8000/api/wildrift_cn/last_date")
+    our_last_date = res.json()["last_date"]
+    their_last_date = stats["data"]["1"]["1"][1]["dtstatdate"]
+    assert pd.to_datetime(their_last_date) > pd.to_datetime(our_last_date)
+
     for league, lanes in stats["data"].items():
         for lane, champions in lanes.items():
             df = create_dataframe_with_features(champions, league, lane, SCHEMA)
-            models = dataframe_to_champion_statistic(df)
-            ChampionStatistic.objects.bulk_create(models)
+            models = dataframe_to_tier_list(df)
+            TierList.objects.bulk_create(models)

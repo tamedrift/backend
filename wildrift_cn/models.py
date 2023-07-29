@@ -31,7 +31,7 @@ class Champion(models.Model):
         return ast.literal_eval(self.roles)
 
 
-class ChampionStatistic(models.Model):
+class TierList(models.Model):
     id = models.IntegerField(primary_key=True)
     position = models.IntegerField()
     hero_id = models.IntegerField()
