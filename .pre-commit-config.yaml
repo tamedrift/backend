@@ -1,3 +1,4 @@
+---
 exclude: migrations/
 repos:
   - repo: https://github.com/pycqa/isort
@@ -12,7 +13,7 @@ repos:
     rev: v0.0.275
     hooks:
       - id: ruff
-        args: [ --fix, --exit-non-zero-on-fix ]
+        args: [--fix, --exit-non-zero-on-fix]
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: 'v1.4.1'
     hooks:
@@ -20,3 +21,8 @@ repos:
         args: [--ignore-missing-imports]
         exclude: tamedrift/
         additional_dependencies: ['types-requests']
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.29.0
+    hooks:
+      - id: yamllint
+        args: [--strict]
