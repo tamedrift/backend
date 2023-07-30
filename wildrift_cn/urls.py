@@ -13,6 +13,7 @@ urlpatterns = [
     path(
         "champions/<int:pk>", views.ChampionsDetail.as_view(), name="champions_detail"
     ),
+    path("last_date", views.LastDateView.as_view(), name="last_date"),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
