@@ -53,7 +53,7 @@ class TierList(models.Model):
     forbid_pct = models.IntegerField()
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
     class Meta:
         ordering = ["win_bzc"]

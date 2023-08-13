@@ -18,5 +18,10 @@ COPY . /app/
 # Install Python dependencies with Poetry
 RUN poetry install --without dev,scripts
 
+# Collect static files 
+RUN python manage.py collectstatic --noinput
+
 # Expose the port on which Django will run (if using the development server)
 EXPOSE 8000
+
+CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "tamedrift.wsgi"]
