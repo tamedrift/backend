@@ -5,11 +5,15 @@ databases:
     user: admin
 
 services:
+  - type: redis
+    name: redis-dev
+    ipAllowList: # required
+    - source: 0.0.0.0/0
+      description: everywhere
+    plan: free # optional (defaults to starter instance type)
   - type: web
     name: tamedrift-dev-backend
-    runtime: python
-    buildCommand: "./build.sh"
-    startCommand: "gunicorn tamedrift.wsgi:application"
+    runtime: docker
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -19,3 +23,8 @@ services:
         generateValue: true
       - key: WEB_CONCURRENCY
         value: 4
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: redis-dev
+          property: connectionString
