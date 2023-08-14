@@ -1,0 +1,21 @@
+---
+databases:
+  - name: tamedrift-dev-db
+    databaseName: tamedrift
+    user: admin
+
+services:
+  - type: web
+    name: tamedrift-dev-backend
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn tamedrift.wsgi:application"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: tamedrift-dev-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
