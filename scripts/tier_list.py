@@ -1,9 +1,12 @@
+import os
+
 import pandas as pd
 import requests
 from pandera import Check, Column, DataFrameSchema
 
 from wildrift_cn.models import TierList
 
+API = os.environ.get("API_URL", "http://localhost:8000")
 SCHEMA = DataFrameSchema(
     {
         "id": Column(int),
@@ -58,10 +61,11 @@ def run():
     stats = res.json()
 
     # Check dates
-    res = requests.get("http://localhost:8000/api/wildrift_cn/last_date")
+    res = requests.get(API + "/api/wildrift_cn/last_date")
     our_last_date = res.json()["last_date"]
-    their_last_date = stats["data"]["1"]["1"][1]["dtstatdate"]
-    assert pd.to_datetime(their_last_date) > pd.to_datetime(our_last_date)
+    if our_last_date is not None:
+        their_last_date = stats["data"]["1"]["1"][1]["dtstatdate"]
+        assert pd.to_datetime(their_last_date) > pd.to_datetime(our_last_date)
 
     for league, lanes in stats["data"].items():
         for lane, champions in lanes.items():

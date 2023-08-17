@@ -3,16 +3,17 @@ databases:
   - name: tamedrift-dev-db
     databaseName: tamedrift
     user: admin
-
 services:
   - type: redis
     name: redis-dev
-    ipAllowList: # required
-    - source: 0.0.0.0/0
-      description: everywhere
-    plan: free # optional (defaults to starter instance type)
+    region: frankfurt
+    ipAllowList:
+      - source: 0.0.0.0/0
+        description: everywhere
+    plan: free
   - type: web
     name: tamedrift-dev-backend
+    region: frankfurt
     runtime: docker
     envVars:
       - key: DATABASE_URL
@@ -28,3 +29,9 @@ services:
           type: redis
           name: redis-dev
           property: connectionString
+  - type: cron
+    name: tier-list
+    runtime: docker
+    dockerfilePath: ./Dockerfile.scripts
+    dockerCommand: python manage.py runscript tier_list
+    schedule: 0 0 * * 1,5
