@@ -63,12 +63,12 @@ def run():
     # Check dates
     res = requests.get(API + "/api/wildrift_cn/last_date")
     our_last_date = res.json()["last_date"]
-    if our_last_date is not None:
-        their_last_date = stats["data"]["1"]["1"][1]["dtstatdate"]
-        assert pd.to_datetime(their_last_date) > pd.to_datetime(our_last_date)
-
-    for league, lanes in stats["data"].items():
-        for lane, champions in lanes.items():
-            df = create_dataframe_with_features(champions, league, lane, SCHEMA)
-            models = dataframe_to_tier_list(df)
-            TierList.objects.bulk_create(models)
+    their_last_date = stats["data"]["1"]["1"][1]["dtstatdate"]
+    if our_last_date is not None and (
+        pd.to_datetime(their_last_date) > pd.to_datetime(our_last_date)
+    ):
+        for league, lanes in stats["data"].items():
+            for lane, champions in lanes.items():
+                df = create_dataframe_with_features(champions, league, lane, SCHEMA)
+                models = dataframe_to_tier_list(df)
+                TierList.objects.bulk_create(models)

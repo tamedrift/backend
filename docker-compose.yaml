@@ -8,7 +8,7 @@ services:
     environment:
       - DEBUG=True
       - SECRET_KEY=mysecretkey
-      - DATABASE_URL=/Users/martin/PycharmProjects/tamedrift/backend/db.sqlite3
+      - DATABASE_URL=postgres://admin:XcPOzIwK6XXKL63r6C2ch4RsCaoVGIiR@dpg-cjd8p02nip6c73efmftg-a.oregon-postgres.render.com/tamedrift
     ports:
       - "8000:8000"
     depends_on:

@@ -35,10 +35,11 @@ def name_from_poster_url(url: str) -> str:
 
 
 def run():
+    # "https://wildrift.leagueoflegends.com/page-data/en-us/champions/page-data.json"
     url = "https://game.gtimg.cn/images/lgamem/act/lrlib/js/heroList/hero_list.js"
     res = requests.get(url)
     champs = res.json()
 
     models = process_champions(champs)
 
-    Champion.objects.bulk_create(models)
+    Champion.objects.bulk_create(models, ignore_conflicts=True)

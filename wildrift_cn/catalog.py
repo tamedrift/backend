@@ -30,7 +30,7 @@ class Catalog:
         "卡蜜尔": "Camille",
         "卢锡安": "Lucian",
         "厄加特": "Urgot",
-        "厄运小姐": "MissFortune",
+        "厄运小姐": "Miss Fortune",
         "古拉加斯": "Gragas",
         "吉格斯": "Ziggs",
         "嘉文四世": "Jarvan IV",
