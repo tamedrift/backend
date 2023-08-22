@@ -34,9 +34,21 @@ services:
     dockerfilePath: ./Dockerfile.scripts
     dockerCommand: python manage.py runscript tier_list
     schedule: 0 0 * * 1,5
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: tamedrift-dev-db
+          property: connectionString
+      - key: API_URL
+        value: https://tamedrift-dev-backend.onrender.com
   - type: cron
     name: champions-dev
     runtime: docker
     dockerfilePath: ./Dockerfile.scripts
     dockerCommand: python manage.py runscript champions
     schedule: 0 0 * * 1
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: tamedrift-dev-db
+          property: connectionString
