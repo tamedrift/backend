@@ -64,7 +64,7 @@ def run():
     res = requests.get(API + "/api/wildrift_cn/last_date")
     our_last_date = res.json()["last_date"]
     their_last_date = stats["data"]["1"]["1"][1]["dtstatdate"]
-    if our_last_date is not None and (
+    if our_last_date is None or (
         pd.to_datetime(their_last_date) > pd.to_datetime(our_last_date)
     ):
         for league, lanes in stats["data"].items():
