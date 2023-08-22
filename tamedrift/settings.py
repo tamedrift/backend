@@ -132,7 +132,9 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://localhost:8080",
     "https://tamedrift-frontend.onrender.com",
-    "https://tamedrift-frontend-bsyi.onrender.com/",
+    "https://tamedrift-frontend-bsyi.onrender.com",
+    "https://www.tamedrift.com",
+    "https://tamedrift.com",
 ]
 
 CACHES = {
