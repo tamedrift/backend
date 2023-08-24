@@ -36,7 +36,7 @@ class Catalog:
         "嘉文四世": "Jarvan IV",
         "图奇": "Twitch",
         "墨菲特": "Malphite",
-        "奥恩": "Orrn",
+        "奥恩": "Ornn",
         "奥拉夫": "Olaf",
         "奥瑞利安·索尔": "Aurelion Sol",
         "奥莉安娜": "Orianna",

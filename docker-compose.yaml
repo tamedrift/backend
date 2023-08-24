@@ -8,7 +8,7 @@ services:
     environment:
       - DEBUG=True
       - SECRET_KEY=mysecretkey
-      - DATABASE_URL=postgres://admin:XcPOzIwK6XXKL63r6C2ch4RsCaoVGIiR@dpg-cjd8p02nip6c73efmftg-a.oregon-postgres.render.com/tamedrift
+      - DATABASE_URL=postgres://admin:TSKitdWtyPUEYT5y2iJhVqE9KU8KUSgV@dpg-cjiasg337aks73d1kbsg-a.oregon-postgres.render.com/tamedrift_dtcg
     ports:
       - "8000:8000"
     depends_on:
