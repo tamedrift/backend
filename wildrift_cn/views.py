@@ -20,6 +20,7 @@ class TierListView(generics.ListAPIView):
 class ChampionsList(generics.ListAPIView):
     queryset = Champion.objects.all()
     serializer_class = ChampionSerializer
+    pagination_class = None
 
 
 @method_decorator(cache_page(timeout=60 * 60 * 30), name="dispatch")
