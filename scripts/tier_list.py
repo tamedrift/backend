@@ -1,4 +1,5 @@
 import os
+import uuid
 import logging
 
 import pandas as pd
@@ -41,6 +42,8 @@ def create_dataframe_with_features(
 
     df = (
         df
+        # Create a unique id
+        .assign(id=[[uuid.uuid4().hex for _ in range(len(df))]])
         # Create tier based on the quantiles from win_rate
         .assign(tier=5 - pd.cut(df.win_rate, 5, labels=False))
         # Create percentiles for bar length in Vue
@@ -114,5 +117,5 @@ def run():
         champs = res.json()
         models = process_champions(champs)
         Champion.objects.bulk_create(models, ignore_conflicts=True)
-    
+
     logging.info("No new data available.")

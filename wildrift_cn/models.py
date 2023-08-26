@@ -7,7 +7,7 @@ from django.db import models
 class Champion(models.Model):
     # Keys below are dropped from API
     # intro, lane, tags, searchkey
-    heroId = models.IntegerField(primary_key=True)
+    heroId = models.CharField(max_length=32, primary_key=True)
     name = models.CharField(max_length=100)
     roles = models.CharField(max_length=200)
     avatar = models.URLField()
