@@ -7,7 +7,7 @@ from django.db import models
 class Champion(models.Model):
     # Keys below are dropped from API
     # intro, lane, tags, searchkey
-    heroId = models.CharField(max_length=32, primary_key=True)
+    heroId = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
     roles = models.CharField(max_length=200)
     avatar = models.URLField()
@@ -32,7 +32,7 @@ class Champion(models.Model):
 
 
 class TierList(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.CharField(max_length=32, primary_key=True)
     position = models.IntegerField()
     hero_id = models.IntegerField()
     strength = models.IntegerField()
