@@ -1,4 +1,5 @@
 import os
+import logging
 
 import pandas as pd
 import requests
@@ -99,6 +100,7 @@ def run():
         pd.to_datetime(their_last_date) > pd.to_datetime(our_last_date)
     ):
         # Tier list
+        logging.info("Scraping new tier list.")
         for league, lanes in stats["data"].items():
             for lane, champions in lanes.items():
                 df = create_dataframe_with_features(champions, league, lane, SCHEMA)
@@ -106,8 +108,11 @@ def run():
                 TierList.objects.bulk_create(models)
 
         # Champions
+        logging.info("Looking for new champions.")
         url = "https://game.gtimg.cn/images/lgamem/act/lrlib/js/heroList/hero_list.js"
         res = requests.get(url)
         champs = res.json()
         models = process_champions(champs)
         Champion.objects.bulk_create(models, ignore_conflicts=True)
+    
+    logging.info("No new data available.")
