@@ -4,7 +4,8 @@ import pandas as pd
 import requests
 from pandera import Check, Column, DataFrameSchema
 
-from wildrift_cn.models import TierList
+from wildrift_cn.catalog import catalog
+from wildrift_cn.models import Champion, TierList
 
 API = os.environ.get("API_URL", "http://localhost:8000")
 SCHEMA = DataFrameSchema(
@@ -54,6 +55,36 @@ def dataframe_to_tier_list(dataframe: pd.DataFrame) -> list[TierList]:
     return [TierList(**row) for row in rows]
 
 
+def process_champions(champions: dict) -> list[Champion]:
+    keys_to_drop = {"intro", "lane", "tags", "searchkey", "alias", "title"}
+    models = []
+    for champ in champions["heroList"].values():
+        # Drop useless columns
+        champ = {k: v for k, v in champ.items() if k not in keys_to_drop}
+
+        # Translate name
+        name = champ["name"]
+        if name not in catalog.names:
+            champ["name"] = name_from_poster_url(champ["poster"])
+        else:
+            champ["name"] = catalog.names[name]
+
+        # Translate roles
+        champ["roles"] = [catalog.roles[role] for role in champ["roles"]]
+
+        model = Champion(**champ)
+        models.append(model)
+
+    return models
+
+
+def name_from_poster_url(url: str) -> str:
+    start_index = url.rfind("/") + 1
+    end_index = url.rfind("_")
+    champion_name = url[start_index:end_index]
+    return champion_name
+
+
 def run():
     # Scrape chinese data
     url = "https://mlol.qt.qq.com/go/lgame_battle_info/hero_rank_list_v2"
@@ -67,8 +98,16 @@ def run():
     if our_last_date is None or (
         pd.to_datetime(their_last_date) > pd.to_datetime(our_last_date)
     ):
+        # Tier list
         for league, lanes in stats["data"].items():
             for lane, champions in lanes.items():
                 df = create_dataframe_with_features(champions, league, lane, SCHEMA)
                 models = dataframe_to_tier_list(df)
                 TierList.objects.bulk_create(models)
+
+        # Champions
+        url = "https://game.gtimg.cn/images/lgamem/act/lrlib/js/heroList/hero_list.js"
+        res = requests.get(url)
+        champs = res.json()
+        models = process_champions(champs)
+        Champion.objects.bulk_create(models, ignore_conflicts=True)
